@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { addProduct as createProduct } from "../Services/api"
 
 function AddProduct() {
   const [name, setName] = useState("")
@@ -9,16 +10,6 @@ function AddProduct() {
   const [loading, setLoading] = useState(false)
   
   const navigate = useNavigate()
-  const abortControllerRef = useRef(null)
-
-  // Cleanup function
-  useEffect(() => {
-    return () => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort()
-      }
-    }
-  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -41,9 +32,6 @@ function AddProduct() {
     }
     
     setLoading(true)
-    
-    // Create new abort controller for this request
-    abortControllerRef.current = new AbortController()
 
     const newProduct = {
       name: name.trim(),
@@ -53,20 +41,7 @@ function AddProduct() {
     }
 
     try {
-      const res = await fetch("http://localhost:3002/products", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(newProduct),
-        signal: abortControllerRef.current.signal
-      })
-
-      if (!res.ok) {
-        throw new Error("Failed to add product")
-      }
-
-      const data = await res.json()
+      const data = await createProduct(newProduct)
       console.log("Added product:", data)
 
       // Reset form
@@ -85,7 +60,6 @@ function AddProduct() {
       }
     } finally {
       setLoading(false)
-      abortControllerRef.current = null
     }
   }
 
@@ -107,7 +81,7 @@ function AddProduct() {
         </div>
 
         <div>
-          <label htmlFor="price">Price:</label>
+          <label htmlFor="price">Price (KES):</label>
           <input
             id="price"
             type="number"

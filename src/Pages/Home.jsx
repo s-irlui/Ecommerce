@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { getProducts } from "../Services/api"
 
 function Home() {
   const [products, setProducts] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetch("http://localhost:3001/products")
-      .then((res) => res.json())
+    getProducts()
       .then((data) => setProducts(data))
+      .catch((err) => {
+        console.error("Error loading products:", err)
+        setProducts([])
+      })
   }, [])
 
   return (
@@ -45,7 +49,7 @@ function Home() {
         {products.slice(0, 4).map((product) => (
           <div key={product.id} className="home-card">
             <h3>{product.name}</h3>
-            <p>${product.price}</p>
+            <p>KES {product.price}</p>
             <span>{product.category}</span>
           </div>
         ))}

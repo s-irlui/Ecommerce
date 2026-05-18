@@ -55,6 +55,13 @@
       "category": "drink",
       "image": "https://via.placeholder.com/300",
       "id": "b39PhUNO9QQ"
+    },
+    {
+      "name": "kenya cane",
+      "price": 800,
+      "category": "drink",
+      "image": "https://via.placeholder.com/300",
+      "id": "CCgexAGLI4U"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

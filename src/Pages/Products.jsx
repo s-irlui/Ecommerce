@@ -1,32 +1,41 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import SearchBar from "../components/SearchBar"
+import { deleteProduct, getProducts } from "../Services/api"
 
 function Products() {
   const [products, setProducts] = useState([])
   const [search, setSearch] = useState("")
+  const [error, setError] = useState("")
   const navigate = useNavigate()
 
-  const loadProducts = () => {
-    fetch("http://localhost:3001/products")
-      .then((res) => res.json())
-      .then((data) => setProducts(data))
+  const loadProducts = async () => {
+    try {
+      const data = await getProducts()
+      setProducts(data)
+      setError("")
+    } catch (err) {
+      console.error("Error loading products:", err)
+      setError("Could not load products. Start the JSON server and refresh.")
+    }
   }
 
   useEffect(() => {
     loadProducts()
   }, [])
 
-  const handleDelete = (id) => {
-    fetch(`http://localhost:3001/products/${id}`, {
-      method: "DELETE"
-    }).then(() => {
+  const handleDelete = async (id) => {
+    try {
+      await deleteProduct(id)
       loadProducts()
-    })
+    } catch (err) {
+      console.error("Error deleting product:", err)
+      alert("Could not delete product. Check that the JSON server is running.")
+    }
   }
 
   const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(search.toLowerCase())
+    (product.name || "").toLowerCase().includes(search.toLowerCase())
   )
 
   return (
@@ -34,6 +43,7 @@ function Products() {
       <h1>Products Page</h1>
 
       <SearchBar search={search} setSearch={setSearch} />
+      {error && <p className="error">{error}</p>}
 
       <div className="products-container">
         {filteredProducts.length > 0 ? (
@@ -48,7 +58,7 @@ function Products() {
               )}
 
               <h3>{product.name}</h3>
-              <p>Price: ${product.price}</p>
+              <p>Price: KES {product.price}</p>
               <p className="category">{product.category}</p>
 
               <button
