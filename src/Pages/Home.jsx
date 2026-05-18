@@ -18,8 +18,8 @@ function Home() {
   return (
     <div className="home-container">
       <div className="hero">
-        <h1> HOME</h1>
-        <p></p>
+        <h1>Home</h1>
+        <p>Manage your products in one place.</p>
 
         <div className="hero-actions">
           <button onClick={() => navigate("/products")}>
