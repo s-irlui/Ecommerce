@@ -16,7 +16,7 @@ function Products() {
       setError("")
     } catch (err) {
       console.error("Error loading products:", err)
-      setError("Could not load products. Start the JSON server and refresh.")
+      setError("Could not load products. Refresh the page and try again.")
     }
   }
 
@@ -30,7 +30,7 @@ function Products() {
       loadProducts()
     } catch (err) {
       console.error("Error deleting product:", err)
-      alert("Could not delete product. Check that the JSON server is running.")
+      alert("Could not delete product. Refresh the page and try again.")
     }
   }
 

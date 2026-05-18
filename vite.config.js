@@ -10,15 +10,5 @@ export default defineConfig({
       "react-dom": fileURLToPath(new URL("../node_modules/react-dom", import.meta.url))
     },
     dedupe: ["react", "react-dom"]
-  },
-  server: {
-    port: 5173,
-    proxy: {
-      "/products": {
-        target: "http://localhost:3002",
-        changeOrigin: true,
-        secure: false
-      }
-    }
   }
 })

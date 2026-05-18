@@ -1,59 +1,64 @@
-const BASE_URL = "http://localhost:3002"
+import db from "../../db.json"
+
+const STORAGE_KEY = "ecommerce-admin-products"
+
+const readProducts = () => {
+  const savedProducts = localStorage.getItem(STORAGE_KEY)
+
+  if (savedProducts) {
+    return JSON.parse(savedProducts)
+  }
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(db.products))
+  return db.products
+}
+
+const saveProducts = (products) => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(products))
+}
 
 export const getProducts = async () => {
-  const res = await fetch(`${BASE_URL}/products`)
-  if (!res.ok) {
-    throw new Error("Failed to fetch products")
-  }
-  return res.json()
+  return readProducts()
 }
 
 export const getProduct = async (id) => {
-  const res = await fetch(`${BASE_URL}/products/${id}`)
-  if (!res.ok) {
+  const product = readProducts().find((item) => item.id === id)
+
+  if (!product) {
     throw new Error("Product not found")
   }
-  return res.json()
+
+  return product
 }
 
 export const addProduct = async (product) => {
-  const res = await fetch(`${BASE_URL}/products`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(product)
-  })
-
-  if (!res.ok) {
-    throw new Error("Failed to add product")
+  const products = readProducts()
+  const newProduct = {
+    ...product,
+    id: crypto.randomUUID()
   }
 
-  return res.json()
+  saveProducts([...products, newProduct])
+  return newProduct
 }
 
 export const deleteProduct = async (id) => {
-  const res = await fetch(`${BASE_URL}/products/${id}`, {
-    method: "DELETE"
-  })
-
-  if (!res.ok) {
-    throw new Error("Failed to delete product")
-  }
+  const products = readProducts().filter((product) => product.id !== id)
+  saveProducts(products)
 }
 
 export const updateProduct = async (id, updatedData) => {
-  const res = await fetch(`${BASE_URL}/products/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(updatedData)
-  })
+  const products = readProducts()
+  const productExists = products.some((product) => product.id === id)
 
-  if (!res.ok) {
+  if (!productExists) {
     throw new Error("Failed to update product")
   }
 
-  return res.json()
+  const updatedProducts = products.map((product) =>
+    product.id === id ? { ...product, ...updatedData, id } : product
+  )
+
+  saveProducts(updatedProducts)
+  return updatedProducts.find((product) => product.id === id)
 }
