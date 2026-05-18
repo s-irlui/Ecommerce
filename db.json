@@ -1,0 +1,61 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Wireless Headphones",
+      "price": 150,
+      "category": "Electronics",
+      "image": "https://images.unsplash.com/photo-1518444028785-8f75f53b7c6a"
+    },
+    {
+      "id": "2",
+      "name": "Smart Watch",
+      "price": 220,
+      "category": "Wearables",
+      "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30"
+    },
+    {
+      "id": "3",
+      "name": "Minimal Sneakers",
+      "price": 90,
+      "category": "Fashion",
+      "image": "https://images.unsplash.com/photo-1528701800489-20be3c2ea2e4"
+    },
+    {
+      "id": "4",
+      "name": "Desk Lamp",
+      "price": 45,
+      "category": "Home",
+      "image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c"
+    },
+    {
+      "id": "5",
+      "name": "Backpack",
+      "price": 60,
+      "category": "Accessories",
+      "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62"
+    },
+    {
+      "id": "6",
+      "name": "Bluetooth Speaker",
+      "price": 110,
+      "category": "Electronics",
+      "image": "https://images.unsplash.com/photo-1585386959984-a41552231693"
+    },
+    {
+      "name": "kenya cane",
+      "price": 200,
+      "category": "drink",
+      "image": "https://via.placeholder.com/300",
+      "id": "65itJiO6m4k"
+    },
+    {
+      "name": "water",
+      "price": 30,
+      "category": "drink",
+      "image": "https://via.placeholder.com/300",
+      "id": "b39PhUNO9QQ"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
