@@ -53,7 +53,7 @@ function AddProduct() {
     }
 
     try {
-      const res = await fetch("http://localhost:3001/products", {
+      const res = await fetch("http://localhost:3002/products", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -113,7 +113,7 @@ function AddProduct() {
             type="number"
             step="0.01"
             min="0.01"
-            placeholder="Price"
+            placeholder="Price (KES)"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required

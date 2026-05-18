@@ -15,7 +15,7 @@ function Home() {
     <div className="home-container">
       <div className="hero">
         <h1> HOME</h1>
-        <p>Manage products, pricing, and inventory in one clean system</p>
+        <p></p>
 
         <div className="hero-actions">
           <button onClick={() => navigate("/products")}>
